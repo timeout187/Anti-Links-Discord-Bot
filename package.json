@@ -1,16 +1,38 @@
 {
   "name": "antilink",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "AntiLink community edition — a Discord moderation bot that automatically removes unwanted links.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "lint": "eslint ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "moderation",
+    "anti-link",
+    "discord.js"
+  ],
+  "homepage": "https://antil.ink",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timeout187/Anti-Links-Discord-Bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/timeout187/Anti-Links-Discord-Bot/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "discord.js": "^13.17.1",
+    "discord.js": "^14.26.4",
     "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.39.4",
+    "globals": "^16.5.0"
   }
 }
