@@ -1,0 +1,70 @@
+name: "🐛 Bug Report"
+description: Report a problem with the AntiLink open-source bot
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report! Please fill out the
+        sections below so we can reproduce and fix the issue quickly.
+
+        ⚠️ **Do not** include your bot token, webhook URL, or any secrets.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checklist
+      options:
+        - label: I searched existing issues and this has not been reported.
+          required: true
+        - label: I am running a supported Node.js version (18+).
+          required: true
+        - label: This is not a security vulnerability (those go to SECURITY.md).
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this?
+      placeholder: |
+        1. Configure '...'
+        2. Post '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste logs here (redact any secrets). This will be formatted as code.
+      render: shell
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version
+      placeholder: "e.g. 20.11.0"
+    validations:
+      required: true
+  - type: input
+    id: djs-version
+    attributes:
+      label: discord.js version
+      placeholder: "e.g. 14.x"
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "e.g. Ubuntu 22.04, Windows 11"
