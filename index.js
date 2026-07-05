@@ -1,61 +1,61 @@
-require('dotenv').config(); // Import and configure dotenv
+require('dotenv').config();
 
-// Require the Discord.js module
-const { Client, Intents, WebhookClient } = require('discord.js');
+const { Client, Events, GatewayIntentBits, WebhookClient } = require('discord.js');
 
-// Create a new Discord client instance
-const client = new Client({ 
+const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES
-    ]
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+    ],
 });
 
-// Retrieve bot token and webhook URL from environment variables
 const token = process.env.DISCORD_TOKEN;
 const webhookUrl = process.env.WEBHOOK_URL;
 
-// Define the whitelisted channel IDs 
-const whitelistedChannels = ['1141168430620348517', '991703210731507772', '1089804113702813716', '1089804219181178901', '1089808293519704135', '1089811203498455090'];
+// Comma-separated ID lists, e.g. WHITELISTED_CHANNEL_IDS=123,456
+const parseIdList = (value) =>
+    (value ?? '')
+        .split(',')
+        .map((id) => id.trim())
+        .filter(Boolean);
 
-// Define the ignored roles IDs
-const ignoredRoles = ['839237666545205248', '985147196330635304', '1094649454654660788', '1209638036485308417'];
+const whitelistedChannels = parseIdList(process.env.WHITELISTED_CHANNEL_IDS);
+const ignoredRoles = parseIdList(process.env.IGNORED_ROLE_IDS);
 
-// Function to check if a channel is whitelisted
+// WEBHOOK_URL is optional; without it, deletions are simply not logged.
+const webhook = webhookUrl ? new WebhookClient({ url: webhookUrl }) : null;
+
 const isWhitelistedChannel = (channelId) => whitelistedChannels.includes(channelId);
 
-// Function to check if a user has any ignored role
-const hasIgnoredRole = (member) => {
-    return member.roles.cache.some(role => ignoredRoles.includes(role.id));
+// member is null for system/webhook messages, so default to "no ignored role"
+const hasIgnoredRole = (member) =>
+    member?.roles.cache.some((role) => ignoredRoles.includes(role.id)) ?? false;
+
+const sendLogToWebhook = async (content) => {
+    if (!webhook) return;
+    await webhook.send(content);
 };
 
-// Function to send log message to webhook channel
-const sendLogToWebhook = async (message) => {
-    const webhook = new WebhookClient({ url: webhookUrl });
-    await webhook.send(message);
-};
+const linkPattern = /https?:\/\/\S+/i;
 
-// Event listener for when the bot is ready
-client.once('ready', () => {
-    console.log('Bot is ready!');
+client.once(Events.ClientReady, (readyClient) => {
+    console.log(`Logged in as ${readyClient.user.tag}. Watching for links.`);
 });
 
-// Event listener for when a message is sent
-client.on('messageCreate', async (message) => {
-    // Check if the message contains any URLs
-    if (message.content.match(/https?:\/\/\S+/gi)) {
-        // Check if the channel is not whitelisted and the sender does not have any ignored role
-        if (!isWhitelistedChannel(message.channel.id) && !hasIgnoredRole(message.member)) {
-            // Delete the message containing the URL
-            message.delete()
-                .then(async () => {
-                    // Send log to webhook channel
-                    await sendLogToWebhook(`Deleted message from ${message.author.tag} in #${message.channel.name} containing a link.`);
-                })
-                .catch(console.error);
-        }
+client.on(Events.MessageCreate, async (message) => {
+    if (message.author.bot || !message.inGuild()) return;
+    if (!linkPattern.test(message.content)) return;
+    if (isWhitelistedChannel(message.channel.id) || hasIgnoredRole(message.member)) return;
+
+    try {
+        await message.delete();
+        await sendLogToWebhook(
+            `Deleted message from ${message.author.tag} in #${message.channel.name} containing a link.`,
+        );
+    } catch (error) {
+        console.error('Failed to delete message or send log:', error);
     }
 });
 
-// Log in to Discord with your app's token
 client.login(token);
