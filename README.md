@@ -258,6 +258,6 @@ Built and maintained by the AntiLink community. Star ⭐ the repo if it's useful
 
 <!-- Reference links -->
 [website]: https://antil.ink "AntiLink website"
-[docs]: https://antil.ink/docs "AntiLink documentation"
+[docs]: https://docs.antil.ink/ "AntiLink documentation"
 [discord]: https://support.antil.ink/ "AntiLink support & community Discord"
 [issues]: https://github.com/timeout187/Anti-Links-Discord-Bot/issues
