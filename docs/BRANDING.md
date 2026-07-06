@@ -13,36 +13,36 @@ blocked links and server protection.
 
 ## Color Palette
 
-| Role | Hex | RGB | Preview |
-| ---- | --- | --- | ------- |
-| **AntiLink Blue** (primary) | `#00A3F0` | `0, 163, 240` | ![#00A3F0](https://placehold.co/40x20/00A3F0/00A3F0.png) |
-| **Blue Shadow** (shaded face) | `#0080C1` | `0, 128, 193` | ![#0080C1](https://placehold.co/40x20/0080C1/0080C1.png) |
-| **Blue Highlight** (bevel) | `#25B0F1` | `37, 176, 241` | ![#25B0F1](https://placehold.co/40x20/25B0F1/25B0F1.png) |
-| **Blue Tint** (light bevel) | `#74CBF4` | `116, 203, 244` | ![#74CBF4](https://placehold.co/40x20/74CBF4/74CBF4.png) |
-| **White** (icon / outline) | `#FFFFFF` | `255, 255, 255` | ![#FFFFFF](https://placehold.co/40x20/FFFFFF/FFFFFF.png) |
+| Role                          | Hex       | RGB             | Preview                                                  |
+| ----------------------------- | --------- | --------------- | -------------------------------------------------------- |
+| **AntiLink Blue** (primary)   | `#00A3F0` | `0, 163, 240`   | ![#00A3F0](https://placehold.co/40x20/00A3F0/00A3F0.png) |
+| **Blue Shadow** (shaded face) | `#0080C1` | `0, 128, 193`   | ![#0080C1](https://placehold.co/40x20/0080C1/0080C1.png) |
+| **Blue Highlight** (bevel)    | `#25B0F1` | `37, 176, 241`  | ![#25B0F1](https://placehold.co/40x20/25B0F1/25B0F1.png) |
+| **Blue Tint** (light bevel)   | `#74CBF4` | `116, 203, 244` | ![#74CBF4](https://placehold.co/40x20/74CBF4/74CBF4.png) |
+| **White** (icon / outline)    | `#FFFFFF` | `255, 255, 255` | ![#FFFFFF](https://placehold.co/40x20/FFFFFF/FFFFFF.png) |
 
 ### Suggested neutrals (for docs/site UI)
 
-| Role | Hex |
-| ---- | --- |
-| Ink / text | `#0B1B2B` |
-| Muted text | `#5A6B7B` |
+| Role                 | Hex       |
+| -------------------- | --------- |
+| Ink / text           | `#0B1B2B` |
+| Muted text           | `#5A6B7B` |
 | Surface / background | `#FFFFFF` |
-| Subtle border | `#E3ECF3` |
+| Subtle border        | `#E3ECF3` |
 
 ## Design Tokens
 
 ```css
 :root {
-  --antilink-blue: #00A3F0;
-  --antilink-blue-shadow: #0080C1;
-  --antilink-blue-highlight: #25B0F1;
-  --antilink-blue-tint: #74CBF4;
-  --antilink-white: #FFFFFF;
+  --antilink-blue: #00a3f0;
+  --antilink-blue-shadow: #0080c1;
+  --antilink-blue-highlight: #25b0f1;
+  --antilink-blue-tint: #74cbf4;
+  --antilink-white: #ffffff;
 
-  --antilink-ink: #0B1B2B;
-  --antilink-muted: #5A6B7B;
-  --antilink-border: #E3ECF3;
+  --antilink-ink: #0b1b2b;
+  --antilink-muted: #5a6b7b;
+  --antilink-border: #e3ecf3;
 }
 ```
 
