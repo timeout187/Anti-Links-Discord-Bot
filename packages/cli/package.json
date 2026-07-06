@@ -1,16 +1,13 @@
 {
-  "name": "@antilink-guard/storage",
+  "name": "@antilink-guard/cli",
   "version": "0.1.0",
-  "description": "Storage adapters (memory, SQLite, MySQL, PostgreSQL) for AntiLink Guard OSS.",
+  "description": "Command-line tool for AntiLink Guard OSS: scan text, test URLs, and manage guild config.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+  "bin": {
+    "antilink": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -23,15 +20,14 @@
   },
   "dependencies": {
     "@antilink-guard/core": "workspace:*",
+    "@antilink-guard/storage": "workspace:*",
     "better-sqlite3": "^11.8.1",
-    "mysql2": "^3.12.0",
-    "pg": "^8.13.1",
+    "commander": "^13.1.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.12",
     "@types/node": "^22.10.2",
-    "@types/pg": "^8.11.10",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"

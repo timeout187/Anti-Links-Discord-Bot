@@ -12,10 +12,10 @@
   "homepage": "https://antil.ink",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/timeout187/Anti-Links-Discord-Bot.git"
+    "url": "git+https://github.com/timeout187/antilink-guard.git"
   },
   "bugs": {
-    "url": "https://github.com/timeout187/Anti-Links-Discord-Bot/issues"
+    "url": "https://github.com/timeout187/antilink-guard/issues"
   },
   "scripts": {
     "build": "pnpm -r --filter \"./packages/*\" build",
@@ -40,6 +40,9 @@
     "vitest": "^2.1.8"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "better-sqlite3"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "better-sqlite3"
+    ]
   }
 }
