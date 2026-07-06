@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@antilink-guard/storage": "workspace:*",
-    "dotenv": "^16.4.7"
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
