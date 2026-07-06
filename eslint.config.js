@@ -1,28 +1,36 @@
-// ESLint flat config (ESLint v9+).
-// A permissive baseline — tighten rules to match the project's style as the
-// codebase is modernized. Requires: npm i -D eslint @eslint/js globals
-const js = require('@eslint/js');
-const globals = require('globals');
+// ESLint flat config (ESLint v9+) for the AntiLink Guard OSS monorepo.
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import globals from 'globals';
 
-module.exports = [
-  js.configs.recommended,
+export default tseslint.config(
   {
-    files: ['**/*.js'],
+    ignores: [
+      '**/node_modules/',
+      '**/dist/',
+      '**/build/',
+      '**/coverage/',
+      '**/.turbo/',
+      '**/*.d.ts',
+    ],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
     languageOptions: {
       ecmaVersion: 2023,
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: {
         ...globals.node,
       },
     },
     rules: {
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-console': 'off',
-      eqeqeq: ['error', 'smart'],
-      'prefer-const': 'warn',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/consistent-type-imports': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
-  {
-    ignores: ['node_modules/', 'dist/', 'build/', 'coverage/'],
-  },
-];
+  eslintConfigPrettier,
+);

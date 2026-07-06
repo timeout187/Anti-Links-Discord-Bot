@@ -1,21 +1,20 @@
-name: "💡 Feature Request"
-description: Suggest an idea or improvement for the open-source bot
-title: "[Feature]: "
-labels: ["enhancement", "needs-triage"]
+name: '💡 Feature Request'
+description: Suggest an idea or improvement for AntiLink Guard OSS
+title: '[Feature]: '
+labels: ['enhancement', 'needs-triage']
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for the suggestion! Please check the
-        [Roadmap](../../README.md#roadmap) first — your idea may already be planned.
+        Thanks for the suggestion! Please check
+        [ROADMAP.md](https://github.com/timeout187/antilink-guard/blob/main/ROADMAP.md)
+        first — your idea may already be planned.
   - type: checkboxes
     id: preflight
     attributes:
       label: Preflight checklist
       options:
         - label: I searched existing issues and this has not been requested.
-          required: true
-        - label: This relates to the open-source bot (not a hosted platform product).
           required: true
   - type: textarea
     id: problem

@@ -59,9 +59,9 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement in the
-**[AntiLink support server](https://support.antil.ink/)** — open a private
-ticket or contact a staff member/moderator directly.
+reported to the project maintainers by opening a
+[private GitHub Security Advisory](https://github.com/timeout187/antilink-guard/security/advisories/new)
+(visible only to maintainers) or by direct message to a maintainer on GitHub.
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the

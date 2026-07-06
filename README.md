@@ -13,18 +13,23 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 [![Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-2.1-purple.svg)](./CODE_OF_CONDUCT.md)
 
-[Website][website] · [Documentation][docs] · [Discord][discord] · [Report a Bug][issues] · [Request a Feature][issues]
+[Website][website] · [Documentation][docs] · [Dashboard][dashboard] · [Status][status] · [Discord][discord] · [Report a Bug][issues]
+
+**Want the fully-featured hosted bot instead of self-hosting?**
+[![Add AntiLink to Discord](https://img.shields.io/badge/Add%20AntiLink%202.0-to%20Discord-5865F2?logo=discord&logoColor=white)][invite]
 
 </div>
 
 ---
 
-> **Note on scope.** This repository is the **community / open-source edition** of AntiLink. It contains the self-hostable Discord bot only. Commercial features, hosted infrastructure, billing, and proprietary detection systems are maintained separately and are **not** part of this repository. Anything on the [Roadmap](#roadmap) marked *Planned* does not exist here yet — it is stated as direction, not as a shipped feature.
+> **Note on scope.** This repository is the original, **self-hostable open-source** AntiLink bot. It does automatic link filtering and nothing else. The **hosted AntiLink platform** ([AntiLink 2.0][invite]) is a separate, much larger product — dashboard, paid plans, raid defense, verification, and more — and **none of those features are in this repository**. See [This repo vs. hosted AntiLink](#this-repo-vs-hosted-antilink) for the difference, and the [Roadmap](#roadmap) for what the hosted platform offers. Anything marked *Planned* or *hosted* does not ship here.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [This repo vs. hosted AntiLink](#this-repo-vs-hosted-antilink)
+- [Official links](#official-links)
 - [Architecture](#architecture)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
@@ -41,11 +46,11 @@
 
 ## Introduction
 
-**AntiLink** is a lightweight, self-hostable Discord bot that automatically detects and removes messages containing links in the channels you choose. It was originally built to keep a busy community's general chat free of unwanted and malicious links, and it is now maintained as the open-source foundation of the wider **AntiLink** moderation platform.
+**AntiLink** is a lightweight, self-hostable Discord bot that automatically detects and removes messages containing links in the channels you choose. It was originally built to keep a busy community's general chat free of unwanted and malicious links, and it is the open-source origin of the wider **AntiLink** moderation platform.
 
 The open-source bot is intentionally small and easy to audit: you can read the whole thing, host it yourself, and know exactly what it does with your server's messages.
 
-The broader AntiLink platform (hosted dashboard, analytics, AI-assisted detection, and verification) is a separate product line. See the [Roadmap](#roadmap) for how the open-source bot fits into that picture.
+If you'd rather not self-host, the same team runs a fully-featured **hosted** bot — **AntiLink 2.0** — with a web dashboard, invite/phishing/raid protection, verification, and more. You can [add it to your server in one click][invite]; it's a separate product from this repository (see [below](#this-repo-vs-hosted-antilink)).
 
 ## Features
 
@@ -58,6 +63,38 @@ Currently implemented in this repository:
 - 🪶 **Minimal footprint** — plain Node.js + discord.js, no database required to get started.
 
 > If you spot a discrepancy between this list and the actual code, it's a bug in the docs — please [open an issue][issues]. We keep this section limited to behavior that actually ships.
+
+## This repo vs. hosted AntiLink
+
+There are two ways to run AntiLink. **This repository is the first one.**
+
+| | **This repo** (open-source) | **AntiLink 2.0** ([hosted][invite]) |
+| --- | --- | --- |
+| How you run it | Self-host the Node.js bot yourself | Invite the hosted bot — nothing to host |
+| Link filtering | ✅ Automatic `http(s)://` removal | ✅ Invites, external links, phishing, risk scoring |
+| Config | Env vars in `.env` | Slash commands + [web dashboard][dashboard] |
+| Whitelist | Channels & roles (via env) | Users, roles, channels, categories, domains |
+| Slash commands | ❌ (none) | ✅ `/setup`, `/config`, `/whitelist`, `/guard`, … |
+| Raid / member defense | ❌ | ✅ Member Defense, Honeypot, Emergency Lockdown |
+| Verification, Automod | ❌ | ✅ Verify gate + Automod presets |
+| Cost | Free (MIT) | Free tier + paid plans |
+
+This README documents **only the open-source bot**. For everything in the right-hand column, see the [hosted docs][docs] or [add AntiLink 2.0 to your server][invite].
+
+## Official links
+
+| | |
+| --- | --- |
+| 🌐 Website | [antil.ink][website] |
+| 🛡️ Dashboard | [dashboard.antil.ink][dashboard] |
+| 📖 Documentation | [docs.antil.ink][docs] |
+| 📈 Status | [status.antil.ink][status] |
+| ➕ Add AntiLink 2.0 (hosted) | [invite.antil.ink][invite] |
+| 💬 Support & community | [support.antil.ink][discord] |
+| 🔒 Privacy Policy | [docs.antil.ink/docs/legal/privacy](https://docs.antil.ink/docs/legal/privacy) |
+| 📄 Terms of Service | [docs.antil.ink/docs/legal/terms](https://docs.antil.ink/docs/legal/terms) |
+
+> **Only trust the domains listed above.** AntiLink will never DM you asking for your password, token, or payment details.
 
 ## Architecture
 
@@ -154,7 +191,7 @@ The community edition currently has **no slash commands** — it runs entirely a
 | ---------- | ------ | ----------- |
 | Automatic link filtering | ✅ Available | Deletes any message containing an `http(s)://` link, unless the channel is whitelisted or the author has a bypass role. Runs continuously; no command needed. |
 | Webhook moderation log | ✅ Available | Posts a note to your log webhook each time a message is removed. |
-| `/antilink …` slash commands | 🗓️ Planned | Slash-command administration (status, whitelist, bypass management) is on the [Roadmap](#roadmap) and does not exist yet. |
+| `/antilink …` slash commands | 🗓️ Planned here | This open-source bot has no slash commands yet (on the [Roadmap](#roadmap)). The **hosted [AntiLink 2.0][invite]** bot already has a full slash-command suite (`/setup`, `/config`, `/whitelist`, `/guard`, …) — see the [hosted docs][docs]. |
 
 
 ## Configuration
@@ -176,9 +213,7 @@ _Coming soon — captures of a link removal and the webhook moderation log will 
 
 ## Roadmap
 
-Planned direction for the open-source bot and the wider AntiLink platform. **Unchecked items below are not shipped in this repository yet.**
-
-**Open-source bot**
+Direction for **this open-source bot**. Unchecked items are not shipped here yet.
 
 - [x] Migrate configuration out of code into an environment-driven setup
 - [ ] Slash-command administration (`/antilink …`)
@@ -187,15 +222,21 @@ Planned direction for the open-source bot and the wider AntiLink platform. **Unc
 - [ ] Structured logging + optional webhook embeds
 - [ ] Test suite and typed codebase
 
-**AntiLink platform** *(separate, mostly closed-source products — listed for context)*
+### The hosted AntiLink platform
 
-- [ ] **AntiLink Security** — advanced, hosted protection *(Planned)*
-- [ ] **AntiLink Analytics** — moderation insights and dashboards *(Planned)*
-- [ ] **AntiLink Billing** — subscriptions and licensing *(Planned)*
-- [ ] **AntiLink AI** — AI-assisted detection *(Planned)*
-- [ ] **AntiLink Verify** — member verification *(Planned)*
+Many of the above already exist — and much more — in the **hosted AntiLink 2.0** bot, which is a **separate product, not part of this repository**. It is not on this repo's roadmap; it's listed so you know what's available if you'd rather not self-host. [Add it to your server][invite] or read the [hosted docs][docs].
 
-Have an idea? [Open a feature request][issues].
+- 🛡️ **[Web dashboard][dashboard]** — manage protection, whitelists, and logs from the browser
+- 🔗 **Advanced link protection** — Discord invites, external links, phishing & risk scoring, enforcement modes (delete / quarantine / warn)
+- 🧰 **Full slash-command suite** — `/setup`, `/config`, `/whitelist`, `/checklink`, `/language`, and more
+- 🚨 **Member Defense** — raid detection, account-age screening, quarantine automation *(AntiLink Premium)*
+- 🍯 **Honeypot trap channels** & **Emergency Lockdown**
+- ✅ **Verify** — one-click member verification gate
+- 🤖 **Automod** — preset spam / bad-words / caps / mention filters
+- 🎭 **Custom bot** — run AntiLink under your own name & avatar *(AntiLink Premium)*
+- 💳 **Plans** — Free, Premium, and AntiLink Premium (billing via Paddle)
+
+Have an idea for the **open-source bot**? [Open a feature request][issues].
 
 ## Contributing
 
@@ -226,7 +267,7 @@ Distributed under the **MIT License**. See [LICENSE](./LICENSE) for details.
 
 ## Documentation
 
-Full documentation lives at **[docs][docs]**. This README is the quickest path to a running self-hosted bot; the docs site covers advanced configuration, deployment, and the platform products.
+This README is the complete guide to the **self-hosted open-source bot**. The documentation site at **[docs.antil.ink][docs]** covers the **hosted AntiLink 2.0** platform — dashboard, slash commands, plans, and the security suite — which is a separate product from this repository.
 
 ## FAQ
 
@@ -242,8 +283,8 @@ Check that (1) the **Message Content Intent** is enabled, (2) the bot has **Mana
 **Does it work with the latest discord.js?**
 The bot targets discord.js v14 and Node.js 18+. If you hit a version issue, please [open an issue][issues].
 
-**What's the difference between this and "AntiLink Security"?**
-This repo is the self-hostable open-source bot. *AntiLink Security* is a separate, hosted, mostly closed-source product on the roadmap. Learn more at [antil.ink][website].
+**What's the difference between this and "AntiLink 2.0"?**
+This repo is the original, self-hostable open-source bot — automatic link filtering, configured with env vars. **AntiLink 2.0** is the separate **hosted** product with a dashboard, slash commands, raid defense, verification, and paid plans. [Add it to your server][invite] or see the [comparison](#this-repo-vs-hosted-antilink).
 
 **Can I use this commercially?**
 Yes — MIT permits commercial use. You're responsible for your own hosting and compliance.
@@ -259,5 +300,8 @@ Built and maintained by the AntiLink community. Star ⭐ the repo if it's useful
 <!-- Reference links -->
 [website]: https://antil.ink "AntiLink website"
 [docs]: https://docs.antil.ink/ "AntiLink documentation"
+[dashboard]: https://dashboard.antil.ink "AntiLink web dashboard (hosted)"
+[status]: https://status.antil.ink "AntiLink status page"
+[invite]: https://invite.antil.ink "Add the hosted AntiLink 2.0 bot to your server"
 [discord]: https://support.antil.ink/ "AntiLink support & community Discord"
 [issues]: https://github.com/timeout187/Anti-Links-Discord-Bot/issues

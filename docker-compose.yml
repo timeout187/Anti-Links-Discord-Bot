@@ -1,0 +1,13 @@
+services:
+  antilink-guard:
+    build:
+      context: .
+      dockerfile: apps/example-bot/Dockerfile
+    env_file:
+      - apps/example-bot/.env
+    volumes:
+      - antilink-data:/app/apps/example-bot/data
+    restart: unless-stopped
+
+volumes:
+  antilink-data:

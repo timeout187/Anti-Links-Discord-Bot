@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AntiLink Guard OSS - dashboard-lite</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+      }
+      body {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        line-height: 1.5;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      .banner {
+        background: color-mix(in srgb, canvastext 8%, canvas);
+        border: 1px solid color-mix(in srgb, canvastext 25%, canvas);
+        border-radius: 6px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+      }
+      .guild-picker {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+      input,
+      button {
+        font-size: 1rem;
+        padding: 0.4rem 0.6rem;
+      }
+      section {
+        margin-bottom: 2rem;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 0.4rem 0.6rem;
+        border-bottom: 1px solid color-mix(in srgb, canvastext 15%, canvas);
+        font-size: 0.9rem;
+      }
+      code {
+        background: color-mix(in srgb, canvastext 8%, canvas);
+        padding: 0.1rem 0.3rem;
+        border-radius: 4px;
+      }
+      .empty {
+        opacity: 0.6;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AntiLink Guard OSS - dashboard-lite</h1>
+    <div class="banner">
+      Local, read-only, unauthenticated tool for a self-hosted bot. Do not expose this to the
+      internet without adding your own authentication - see the README.
+    </div>
+
+    <div class="guild-picker">
+      <input id="guild-id" type="text" placeholder="Guild (server) ID" />
+      <button id="load-btn">Load</button>
+    </div>
+
+    <section>
+      <h2>Status</h2>
+      <div id="status">Enter a guild ID above.</div>
+    </section>
+
+    <section>
+      <h2>Allowlist</h2>
+      <div id="allowlist" class="empty">-</div>
+    </section>
+
+    <section>
+      <h2>Blocklist</h2>
+      <div id="blocklist" class="empty">-</div>
+    </section>
+
+    <section>
+      <h2>Recent audit log</h2>
+      <div id="audit-log" class="empty">-</div>
+    </section>
+
+    <script>
+      const guildInput = document.getElementById('guild-id');
+      const loadBtn = document.getElementById('load-btn');
+      const statusEl = document.getElementById('status');
+      const allowlistEl = document.getElementById('allowlist');
+      const blocklistEl = document.getElementById('blocklist');
+      const auditLogEl = document.getElementById('audit-log');
+
+      const STORAGE_KEY = 'antilink-dashboard-guild-id';
+      guildInput.value = localStorage.getItem(STORAGE_KEY) ?? '';
+
+      async function getJson(path) {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error(`${path} -> HTTP ${res.status}`);
+        return res.json();
+      }
+
+      function renderDomainTable(el, entries, extraColumns) {
+        if (!entries.length) {
+          el.className = 'empty';
+          el.textContent = 'No entries.';
+          return;
+        }
+        el.className = '';
+        const rows = entries
+          .map(
+            (e) =>
+              `<tr><td><code>${e.domain}</code></td><td>${e.addedBy}</td>${extraColumns ? extraColumns(e) : ''}<td>${new Date(e.createdAt).toLocaleString()}</td></tr>`,
+          )
+          .join('');
+        el.innerHTML = `<table><thead><tr><th>Domain</th><th>Added by</th>${extraColumns ? '<th>Reason</th>' : ''}<th>Added at</th></tr></thead><tbody>${rows}</tbody></table>`;
+      }
+
+      async function loadGuild() {
+        const guildId = guildInput.value.trim();
+        if (!guildId) return;
+        localStorage.setItem(STORAGE_KEY, guildId);
+
+        statusEl.textContent = 'Loading...';
+        try {
+          const status = await getJson(`/api/guild/${encodeURIComponent(guildId)}/status`);
+          const cfg = status.guildConfig;
+          statusEl.innerHTML = `
+            <table>
+              <tr><th>Enabled</th><td>${cfg.enabled}</td></tr>
+              <tr><th>Mode</th><td><code>${cfg.mode}</code></td></tr>
+              <tr><th>Log channel</th><td>${cfg.logChannelId ?? '<span class="empty">not set</span>'}</td></tr>
+              <tr><th>Block all invites</th><td>${cfg.blockAllInvites}</td></tr>
+              <tr><th>Allowlist entries</th><td>${status.counts.allowlist}</td></tr>
+              <tr><th>Blocklist entries</th><td>${status.counts.blocklist}</td></tr>
+              <tr><th>Allowed invites</th><td>${status.counts.inviteRules}</td></tr>
+              <tr><th>Last audit entry</th><td>${status.lastAuditAt ? new Date(status.lastAuditAt).toLocaleString() : '<span class="empty">none yet</span>'}</td></tr>
+            </table>`;
+
+          const allowlist = await getJson(`/api/guild/${encodeURIComponent(guildId)}/allowlist`);
+          renderDomainTable(allowlistEl, allowlist);
+
+          const blocklist = await getJson(`/api/guild/${encodeURIComponent(guildId)}/blocklist`);
+          renderDomainTable(blocklistEl, blocklist, (e) => `<td>${e.reason ?? ''}</td>`);
+
+          const auditLog = await getJson(
+            `/api/guild/${encodeURIComponent(guildId)}/audit-logs?limit=50`,
+          );
+          if (!auditLog.length) {
+            auditLogEl.className = 'empty';
+            auditLogEl.textContent = 'No audit log entries yet.';
+          } else {
+            auditLogEl.className = '';
+            const rows = auditLog
+              .map(
+                (entry) =>
+                  `<tr><td>${new Date(entry.createdAt).toLocaleString()}</td><td>${entry.verdict}</td><td>${entry.action}</td><td>${entry.score}</td><td>${entry.reasons.join(', ') || 'none'}</td><td>${entry.normalizedUrl ?? ''}</td></tr>`,
+              )
+              .join('');
+            auditLogEl.innerHTML = `<table><thead><tr><th>When</th><th>Verdict</th><th>Action</th><th>Score</th><th>Reasons</th><th>URL</th></tr></thead><tbody>${rows}</tbody></table>`;
+          }
+        } catch (error) {
+          statusEl.textContent = `Failed to load: ${error.message}`;
+        }
+      }
+
+      loadBtn.addEventListener('click', loadGuild);
+      guildInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') loadGuild();
+      });
+
+      if (guildInput.value) loadGuild();
+    </script>
+  </body>
+</html>

@@ -8,6 +8,14 @@ node_modules/
 .env.local
 .env.*.local
 *.token
+*.pem
+*.key
+
+# Local SQLite databases
+*.sqlite
+*.sqlite3
+*.db
+data/
 
 # Logs
 logs/
@@ -23,10 +31,12 @@ pnpm-debug.log*
 tmp/
 coverage/
 .nyc_output/
+.turbo/
 
 # Build output
 dist/
 build/
+*.tsbuildinfo
 
 # Editor / OS
 .vscode/*
@@ -36,6 +46,6 @@ build/
 .DS_Store
 Thumbs.db
 
-# Optional package manager lockfiles from other managers (keep package-lock.json)
+# This project uses pnpm — keep pnpm-lock.yaml, ignore other managers' lockfiles
 yarn.lock
-pnpm-lock.yaml
+package-lock.json
