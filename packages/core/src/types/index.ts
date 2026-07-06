@@ -13,9 +13,9 @@ export type DetectionReason =
   | 'REGEX_RULE_MATCH'
   | 'NOT_IN_ALLOWLIST';
 
-export type EnforcementMode = 'log' | 'delete' | 'timeout';
+export type EnforcementMode = 'log' | 'warn' | 'delete' | 'timeout';
 
-export type ModerationActionType = 'NONE' | 'LOG' | 'DELETE' | 'TIMEOUT';
+export type ModerationActionType = 'NONE' | 'LOG' | 'WARN' | 'DELETE' | 'TIMEOUT';
 
 export interface ExtractedLink {
   /** The exact substring matched in the de-obfuscated text. */

@@ -41,8 +41,10 @@ function scoreToVerdict(score: number): Verdict {
 
 function verdictToAction(verdict: Verdict, mode: EnforcementMode): ModerationActionType {
   if (verdict === 'ALLOW') return 'NONE';
-  if (mode === 'log') return 'LOG';
   if (verdict === 'WARN') return 'LOG';
+  // verdict is BLOCK or QUARANTINE from here - `mode` decides the ceiling.
+  if (mode === 'log') return 'LOG';
+  if (mode === 'warn') return 'WARN';
   if (mode === 'delete') return 'DELETE';
   // mode === 'timeout'
   return verdict === 'QUARANTINE' ? 'TIMEOUT' : 'DELETE';

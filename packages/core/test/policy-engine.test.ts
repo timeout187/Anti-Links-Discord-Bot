@@ -102,6 +102,36 @@ describe('evaluateMessage', () => {
     expect(result.action).toBe('TIMEOUT');
   });
 
+  it('returns a WARN action (not DELETE) for a BLOCK verdict in warn mode', () => {
+    const result = evaluateMessage('https://bad-site.com', context, {
+      ...basePolicy,
+      mode: 'warn',
+      domainBlocklist: ['bad-site.com'],
+    });
+    expect(result.verdict).toBe('BLOCK');
+    expect(result.action).toBe('WARN');
+  });
+
+  it('returns a WARN action for a QUARANTINE verdict in warn mode (no timeout)', () => {
+    const result = evaluateMessage('https://phish.example', context, {
+      ...basePolicy,
+      mode: 'warn',
+      knownPhishingDomains: ['phish.example'],
+    });
+    expect(result.verdict).toBe('QUARANTINE');
+    expect(result.action).toBe('WARN');
+  });
+
+  it('still returns a plain LOG action for a WARN-severity verdict in warn mode', () => {
+    const result = evaluateMessage('https://example.com', context, {
+      ...basePolicy,
+      mode: 'warn',
+      flagUnknownDomains: true,
+    });
+    expect(result.verdict).toBe('WARN');
+    expect(result.action).toBe('LOG');
+  });
+
   it('only deletes (does not time out) a plain BLOCK verdict in timeout mode', () => {
     const result = evaluateMessage('https://bad-site.com', context, {
       ...basePolicy,

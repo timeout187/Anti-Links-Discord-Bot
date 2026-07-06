@@ -10,7 +10,7 @@ import { createDefaultGuildConfig } from './types.js';
 
 export const CONFIG_BUNDLE_VERSION = 1 as const;
 
-const enforcementModeSchema = z.enum(['log', 'delete', 'timeout']);
+const enforcementModeSchema = z.enum(['log', 'warn', 'delete', 'timeout']);
 
 const guildConfigSchema = z.object({
   guildId: z.string().min(1),

@@ -10,12 +10,12 @@ const regexRuleSchema = z.object({
 
 const channelRuleSchema = z.object({
   channelId: z.string().min(1),
-  mode: z.enum(['exempt', 'log', 'delete', 'timeout']),
+  mode: z.enum(['exempt', 'log', 'warn', 'delete', 'timeout']),
 });
 
 export const policyConfigFileSchema = z.object({
   enabled: z.boolean().default(true),
-  mode: z.enum(['log', 'delete', 'timeout']).default('log'),
+  mode: z.enum(['log', 'warn', 'delete', 'timeout']).default('log'),
   channelRules: z.array(channelRuleSchema).default([]),
   bypassRoleIds: z.array(z.string()).default([]),
   bypassUserIds: z.array(z.string()).default([]),
