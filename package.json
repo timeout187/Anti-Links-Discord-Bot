@@ -1,19 +1,14 @@
 {
-  "name": "antilink",
+  "name": "antilink-guard",
   "version": "0.1.0",
-  "description": "AntiLink community edition — a Discord moderation bot that automatically removes unwanted links.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "lint": "eslint ."
+  "private": true,
+  "description": "Open-source Discord anti-phishing and link moderation framework.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
   },
-  "keywords": [
-    "discord",
-    "discord-bot",
-    "moderation",
-    "anti-link",
-    "discord.js"
-  ],
   "homepage": "https://antil.ink",
   "repository": {
     "type": "git",
@@ -22,17 +17,29 @@
   "bugs": {
     "url": "https://github.com/timeout187/Anti-Links-Discord-Bot/issues"
   },
-  "license": "MIT",
-  "engines": {
-    "node": ">=18"
-  },
-  "dependencies": {
-    "discord.js": "^14.26.4",
-    "dotenv": "^16.4.5"
+  "scripts": {
+    "build": "pnpm -r --filter \"./packages/*\" build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@types/node": "^22.10.2",
     "eslint": "^9.39.4",
-    "globals": "^16.5.0"
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.18.0",
+    "vitest": "^2.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
   }
 }
