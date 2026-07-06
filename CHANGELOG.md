@@ -18,10 +18,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `globals` as devDependencies and a `lint` npm script.
 - `start` npm script (`node index.js`) and `engines` field (Node.js >= 18).
 - `LICENSE` file (MIT), matching the license the README already declared.
+- README: "This repo vs. hosted AntiLink" comparison, an "Official links" table
+  (website, dashboard, docs, status, invite, support, privacy, terms), and an
+  "Add AntiLink 2.0 to Discord" link to the hosted bot (`invite.antil.ink`,
+  Discord App Directory app `1280137058458927134`).
 
 ### Changed
 - Revived and re-positioned the project as the open-source edition of the
   AntiLink platform.
+- README now clearly separates this self-hostable open-source bot from the
+  **hosted AntiLink 2.0** platform, sourced from the official docs. Replaced the
+  earlier placeholder platform names (Security/Analytics/Billing/AI) with the
+  real hosted product set (dashboard, Member Defense, Verify, Automod, Honeypot,
+  Emergency Lockdown, custom bot, Free/Premium/AntiLink Premium plans), all
+  marked as a **separate hosted product** and not shipped in this repository.
 - **Breaking:** upgraded from discord.js v13 to **v14** and ported `index.js`
   to the v14 API (`GatewayIntentBits`, `Events`), including the now-required
   `MessageContent` privileged intent.
