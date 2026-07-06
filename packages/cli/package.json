@@ -21,7 +21,7 @@
   "dependencies": {
     "@antilink-guard/core": "workspace:*",
     "@antilink-guard/storage": "workspace:*",
-    "better-sqlite3": "^11.8.1",
+    "better-sqlite3": "^12.11.1",
     "commander": "^13.1.0",
     "zod": "^3.24.1"
   },
