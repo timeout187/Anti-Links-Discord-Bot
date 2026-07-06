@@ -1,11 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 Community & Support (Discord)
-    url: https://support.antil.ink/
-    about: Questions, setup help, and general discussion in the AntiLink support server.
   - name: 📖 Documentation
-    url: https://docs.antil.ink/
-    about: Guides and configuration reference.
+    url: https://github.com/timeout187/antilink-guard/tree/main/docs
+    about: Guides and configuration reference (getting started, self-hosting, rules engine, and more).
   - name: 🔒 Report a security vulnerability
-    url: https://github.com/timeout187/Anti-Links-Discord-Bot/security/advisories/new
+    url: https://github.com/timeout187/antilink-guard/security/advisories/new
     about: Please report vulnerabilities privately — never in public issues.

@@ -1,14 +1,16 @@
-# Contributing to AntiLink
+# Contributing to AntiLink Guard OSS
 
-First off — thank you for taking the time to contribute! This is the open-source
-edition of AntiLink, and it only gets better with community help.
+Thank you for taking the time to contribute! AntiLink Guard OSS is a
+community-maintained, self-hostable Discord anti-phishing and link
+moderation framework, and it only gets better with community help.
 
-This document explains how to propose changes. By participating, you agree to
-follow our [Code of Conduct](./CODE_OF_CONDUCT.md).
+By participating, you agree to follow our
+[Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Table of Contents
 
 - [Ways to Contribute](#ways-to-contribute)
+- [Project Layout](#project-layout)
 - [Development Setup](#development-setup)
 - [Branching & Workflow](#branching--workflow)
 - [Commit Messages](#commit-messages)
@@ -22,37 +24,59 @@ follow our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 You don't have to write code to help:
 
-- 📝 Improve documentation and examples
+- 📝 Improve documentation in [`docs/`](./docs)
 - 🐛 Report bugs with clear reproduction steps
-- 💡 Suggest features (check the [Roadmap](./README.md#roadmap) first)
+- 💡 Suggest features (check [ROADMAP.md](./ROADMAP.md) first)
 - 🧪 Add tests
-- 🔧 Pick up a *Planned* roadmap item
+- 🔧 Pick up a roadmap item or an issue labeled `good first issue`
+
+## Project Layout
+
+This is a pnpm workspace monorepo:
+
+```
+apps/
+  example-bot/      a working, minimal self-hosted bot built on the packages below
+  dashboard-lite/   a local read-only dashboard
+packages/
+  core/             URL extraction, classification, and the policy engine (no discord.js)
+  storage/          memory / SQLite / MySQL / PostgreSQL storage adapters
+  discord-bot/      the discord.js v14 adapter: slash commands + moderation pipeline
+  cli/              the `antilink` command-line tool
+docs/               user-facing documentation
+```
+
+`packages/core` has no runtime dependency on Discord or any storage backend -
+if you're fixing detection logic, you almost always want to be here.
 
 ## Development Setup
 
-**Prerequisites:** Node.js 18+ and npm.
+**Prerequisites:** Node.js 20+ and [pnpm](https://pnpm.io) (`corepack enable`
+will install the version this repo pins via `packageManager`).
 
 ```bash
 # Fork, then clone your fork
-git clone https://github.com/<your-username>/Anti-Links-Discord-Bot.git
-cd Anti-Links-Discord-Bot
+git clone https://github.com/<your-username>/antilink-guard.git
+cd antilink-guard
 
-# Install dependencies
-npm install
+# Install dependencies for the whole workspace
+pnpm install
 
-# Copy the environment template and fill in a TEST bot's credentials
-cp .env.example .env
+# Build every package (required once before typecheck/lint/tests can resolve
+# workspace packages like @antilink-guard/core - see Coding Standards)
+pnpm run build
 ```
 
-> Always develop against a **test bot and test server** — never a production token.
-
-Useful scripts (see `package.json`):
+To run just one package's tests while iterating:
 
 ```bash
-npm start           # run the bot
-npm run lint        # lint the codebase (if configured)
-npm test            # run tests (if configured)
+pnpm --filter @antilink-guard/core test
+pnpm --filter @antilink-guard/core test:watch
 ```
+
+To try the example bot against a real Discord test server, see
+[`apps/example-bot/README.md`](./apps/example-bot/README.md) - always develop
+against a **test bot and test server**, never a production token.
 
 ## Branching & Workflow
 
@@ -78,26 +102,36 @@ Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`.
 Examples:
 
 ```
-feat(filter): support wildcard channel whitelists
-fix(webhook): handle missing WEBHOOK_URL gracefully
-docs(readme): clarify Message Content Intent requirement
+feat(core): detect punycode homoglyph domains
+fix(discord-bot): handle a null member on role-bypass check
+docs(self-hosting): document the MySQL connection string format
 ```
 
 ## Coding Standards
 
-- Match the existing style; run the linter before pushing.
+- This repo uses **strict TypeScript**, ESLint (flat config), and Prettier.
+  Run `pnpm run lint` and `pnpm run format:check` before pushing.
+- Workspace packages resolve each other via their built `dist/` output, not
+  TypeScript project references - if you change a package that others
+  depend on (most commonly `@antilink-guard/core`), run `pnpm run build`
+  before typechecking or testing dependent packages, or their editors/CI
+  will report stale or missing types.
 - Prefer small, well-named functions over large blocks.
-- Never log or commit secrets. `.env` is gitignored — keep it that way.
-- Document non-obvious behavior with brief comments.
-- Don't introduce features that aren't discussed in an issue first for larger changes.
+- Never log or commit secrets. `.env` files are gitignored - keep it that way.
+- No hardcoded "known phishing domain" lists anywhere in this codebase. That
+  data is always guild-supplied configuration, never a bundled database this
+  project doesn't actually maintain.
+- Don't introduce features that aren't discussed in an issue first for
+  larger changes.
 
 ## Pull Requests
 
 1. Ensure your branch is up to date with `main`.
-2. Run linting/tests locally and make sure they pass.
+2. Run `pnpm run typecheck`, `pnpm run lint`, and `pnpm run test` locally and
+   make sure they pass.
 3. Fill out the pull request template completely.
 4. Link the issue your PR resolves (e.g. `Closes #123`).
-5. Be responsive to review feedback — we aim to keep reviews friendly and quick.
+5. Be responsive to review feedback - we aim to keep reviews friendly and quick.
 
 A maintainer will review as soon as they can. Please be patient; this is
 community-maintained.
@@ -108,13 +142,13 @@ Open a [bug report][issues] using the template. Include:
 
 - What you expected vs. what happened
 - Steps to reproduce
-- Node.js and discord.js versions
+- Node.js version and which package/app is affected
 - Relevant logs (with secrets redacted)
 
 ## Suggesting Features
 
 Open a [feature request][issues]. Explain the problem you're trying to solve,
-not just the solution — that helps us find the best fit for the project.
+not just the solution - that helps us find the best fit for the project.
 
 ## Security Issues
 
@@ -123,6 +157,6 @@ not just the solution — that helps us find the best fit for the project.
 
 ---
 
-Thanks again for contributing! 💜
+Thanks again for contributing!
 
-[issues]: https://github.com/timeout187/Anti-Links-Discord-Bot/issues
+[issues]: https://github.com/timeout187/antilink-guard/issues

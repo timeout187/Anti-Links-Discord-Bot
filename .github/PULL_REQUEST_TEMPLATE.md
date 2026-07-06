@@ -10,6 +10,7 @@ understand and merge your change quickly.
 ## Related issue
 
 <!-- e.g. Closes #123 -->
+
 Closes #
 
 ## Type of change
@@ -26,12 +27,12 @@ Closes #
 
 ## Checklist
 
-- [ ] My code follows the project's style and passes `npm run lint`
+- [ ] My code follows the project's style and passes `pnpm run lint` and `pnpm run typecheck`
 - [ ] I have performed a self-review of my changes
 - [ ] I have commented non-obvious code where needed
 - [ ] I have updated the documentation where needed
-- [ ] I have added/updated tests where applicable
-- [ ] I did **not** commit any secrets (`.env`, tokens, webhook URLs)
+- [ ] I have added/updated tests where applicable (`pnpm run test`)
+- [ ] I did **not** commit any secrets (`.env`, tokens, database URLs)
 - [ ] I updated `CHANGELOG.md` under **Unreleased** if this is user-facing
 
 ## Screenshots (if applicable)

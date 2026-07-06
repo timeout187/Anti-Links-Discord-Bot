@@ -1,8 +1,6 @@
 import 'dotenv/config';
-import { mkdirSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { SqliteStorageAdapter } from '@antilink-guard/storage';
 import { createBot } from '@antilink-guard/discord-bot';
+import { createStorageFromEnv } from './create-storage.js';
 
 const token = process.env.DISCORD_TOKEN;
 if (!token) {
@@ -10,10 +8,7 @@ if (!token) {
   process.exit(1);
 }
 
-const dbPath = resolve(process.env.DATABASE_SQLITE_PATH ?? './data/antilink.sqlite');
-mkdirSync(dirname(dbPath), { recursive: true });
-
-const storage = new SqliteStorageAdapter({ filename: dbPath });
+const storage = createStorageFromEnv(process.env);
 await storage.init();
 
 const client = createBot({ storage });

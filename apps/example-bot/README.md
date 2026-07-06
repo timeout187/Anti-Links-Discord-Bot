@@ -30,13 +30,16 @@ cp apps/example-bot/.env.example apps/example-bot/.env
 
 Edit `apps/example-bot/.env`:
 
-| Variable               | Required                 | Description                                                                                                                                  |
-| ---------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `DISCORD_TOKEN`        | Yes                      | Your bot's token.                                                                                                                            |
-| `DISCORD_CLIENT_ID`    | For command registration | Your application's ID.                                                                                                                       |
-| `DISCORD_GUILD_ID`     | No                       | Register commands to one server for instant updates during development. Leave blank to register globally (takes up to ~1 hour to propagate). |
-| `DATABASE_SQLITE_PATH` | No                       | Defaults to `./data/antilink.sqlite`.                                                                                                        |
-| `LOG_LEVEL`            | No                       | `trace`\|`debug`\|`info`\|`warn`\|`error`\|`silent`. Defaults to `info`.                                                                     |
+| Variable                | Required                 | Description                                                                                                                                  |
+| ----------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DISCORD_TOKEN`         | Yes                      | Your bot's token.                                                                                                                            |
+| `DISCORD_CLIENT_ID`     | For command registration | Your application's ID.                                                                                                                       |
+| `DISCORD_GUILD_ID`      | No                       | Register commands to one server for instant updates during development. Leave blank to register globally (takes up to ~1 hour to propagate). |
+| `DATABASE_DRIVER`       | No                       | `sqlite` (default), `mysql`, or `postgres`.                                                                                                  |
+| `DATABASE_SQLITE_PATH`  | If using SQLite          | Defaults to `./data/antilink.sqlite`.                                                                                                        |
+| `DATABASE_MYSQL_URL`    | If using MySQL           | e.g. `mysql://user:password@localhost:3306/antilink_guard`.                                                                                  |
+| `DATABASE_POSTGRES_URL` | If using PostgreSQL      | e.g. `postgres://user:password@localhost:5432/antilink_guard`.                                                                               |
+| `LOG_LEVEL`             | No                       | `trace`\|`debug`\|`info`\|`warn`\|`error`\|`silent`. Defaults to `info`.                                                                     |
 
 ## 3. Register slash commands
 
@@ -71,13 +74,14 @@ configuration survives container restarts and rebuilds.
 
 ## Storage
 
-This example uses **SQLite** (via `@antilink-guard/storage`'s
-`SqliteStorageAdapter`) - a single file, no separate database server to run.
-For MySQL or PostgreSQL, swap the adapter construction in `src/index.ts`; see
+Defaults to **SQLite** - a single file, no separate database server to run.
+Set `DATABASE_DRIVER=mysql` or `DATABASE_DRIVER=postgres` (with the matching
+`DATABASE_MYSQL_URL` / `DATABASE_POSTGRES_URL`) to use a real database server
+instead; see [`src/create-storage.ts`](./src/create-storage.ts) and
 [`docs/self-hosting.md`](../../docs/self-hosting.md).
 
 ## What this example does and does not include
 
-- Includes: the full moderation pipeline, all slash commands, mod-log embeds.
-- Does not include: a web dashboard (see `apps/dashboard-lite`), multi-shard
-  scaling, or any of the hosted AntiLink platform's paid features.
+- Includes: the full moderation pipeline and all slash commands.
+- Does not include: a web dashboard (see `apps/dashboard-lite`) or multi-shard
+  scaling - see [ROADMAP.md](../../ROADMAP.md) for what's planned.
