@@ -9,8 +9,8 @@
 [![discord.js](https://img.shields.io/badge/discord.js-v14-5865F2.svg)](https://discord.js.org)
 [![pnpm](https://img.shields.io/badge/pnpm-workspace-F69220.svg)](https://pnpm.io)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6.svg)](https://www.typescriptlang.org)
-[![CI](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/ci.yml/badge.svg)](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/codeql.yml/badge.svg)](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/codeql.yml)
+[![CI](https://github.com/timeout187/AntiLink-Guard-OSS/workflows/CI/badge.svg?branch=main)](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/timeout187/AntiLink-Guard-OSS/workflows/CodeQL/badge.svg?branch=main)](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/codeql.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
 **A real detection and policy engine for Discord link moderation - self-hosted,
