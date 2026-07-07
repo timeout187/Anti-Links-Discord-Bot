@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Thanks for the suggestion! Please check
-        [ROADMAP.md](https://github.com/timeout187/antilink-guard/blob/main/ROADMAP.md)
+        [ROADMAP.md](https://github.com/timeout187/AntiLink-Guard-OSS/blob/main/ROADMAP.md)
         first — your idea may already be planned.
   - type: checkboxes
     id: preflight

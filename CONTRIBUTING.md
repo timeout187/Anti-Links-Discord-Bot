@@ -159,4 +159,4 @@ not just the solution - that helps us find the best fit for the project.
 
 Thanks again for contributing!
 
-[issues]: https://github.com/timeout187/antilink-guard/issues
+[issues]: https://github.com/timeout187/AntiLink-Guard-OSS/issues

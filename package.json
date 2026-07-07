@@ -9,13 +9,13 @@
   "engines": {
     "node": ">=20"
   },
-  "homepage": "https://github.com/timeout187/antilink-guard#readme",
+  "homepage": "https://github.com/timeout187/AntiLink-Guard-OSS#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/timeout187/antilink-guard.git"
+    "url": "git+https://github.com/timeout187/AntiLink-Guard-OSS.git"
   },
   "bugs": {
-    "url": "https://github.com/timeout187/antilink-guard/issues"
+    "url": "https://github.com/timeout187/AntiLink-Guard-OSS/issues"
   },
   "scripts": {
     "build": "pnpm -r run build",

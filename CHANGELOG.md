@@ -120,6 +120,6 @@ from it.
   configured channels, channel whitelisting, role-based bypass, and webhook
   notifications.
 
-[Unreleased]: https://github.com/timeout187/antilink-guard/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/timeout187/antilink-guard/releases/tag/v0.1.0
-[0.1.0-legacy]: https://github.com/timeout187/antilink-guard/releases/tag/v0.1.0-legacy
+[Unreleased]: https://github.com/timeout187/AntiLink-Guard-OSS/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/timeout187/AntiLink-Guard-OSS/releases/tag/v0.1.0
+[0.1.0-legacy]: https://github.com/timeout187/AntiLink-Guard-OSS/releases/tag/v0.1.0-legacy

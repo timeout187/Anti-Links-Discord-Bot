@@ -58,4 +58,4 @@ The following are different products/concerns and won't be built here:
 - A hosted, authenticated, multi-admin web dashboard (that's a different
   product; `dashboard-lite` stays local and read-only by design)
 
-[issues]: https://github.com/timeout187/antilink-guard/issues
+[issues]: https://github.com/timeout187/AntiLink-Guard-OSS/issues

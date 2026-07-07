@@ -60,7 +60,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the project maintainers by opening a
-[private GitHub Security Advisory](https://github.com/timeout187/antilink-guard/security/advisories/new)
+[private GitHub Security Advisory](https://github.com/timeout187/AntiLink-Guard-OSS/security/advisories/new)
 (visible only to maintainers) or by direct message to a maintainer on GitHub.
 All complaints will be reviewed and investigated promptly and fairly.
 
