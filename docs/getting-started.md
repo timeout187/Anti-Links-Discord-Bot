@@ -12,7 +12,7 @@ a working bot assembled entirely from the published `@antilink-guard/*` packages
 ## 2. Clone and install
 
 ```bash
-git clone https://github.com/timeout187/antilink-guard.git
+git clone https://github.com/timeout187/AntiLink-Guard-OSS.git
 cd antilink-guard
 pnpm install
 pnpm run build

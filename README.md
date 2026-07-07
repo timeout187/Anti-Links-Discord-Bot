@@ -9,9 +9,18 @@
 [![discord.js](https://img.shields.io/badge/discord.js-v14-5865F2.svg)](https://discord.js.org)
 [![pnpm](https://img.shields.io/badge/pnpm-workspace-F69220.svg)](https://pnpm.io)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6.svg)](https://www.typescriptlang.org)
-[![CI](https://github.com/timeout187/antilink-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/timeout187/antilink-guard/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/timeout187/antilink-guard/actions/workflows/codeql.yml/badge.svg)](https://github.com/timeout187/antilink-guard/actions/workflows/codeql.yml)
+[![CI](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/ci.yml/badge.svg)](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/codeql.yml/badge.svg)](https://github.com/timeout187/AntiLink-Guard-OSS/actions/workflows/codeql.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+
+**A real detection and policy engine for Discord link moderation - self-hosted,
+open-source, and yours to run, read, and modify.**
+
+[Quick start](#quick-start) ·
+[Features](#features) ·
+[Architecture](#architecture) ·
+[Docs](./docs) ·
+[Roadmap](./ROADMAP.md)
 
 </div>
 
@@ -27,8 +36,16 @@ zero-width characters) to slip past naive keyword filters. Most
 self-hostable anti-link bots do a plain `.includes("http")` check and call
 it done.
 
-**AntiLink Guard OSS** is a real detection and policy engine, not a regex
-one-liner - and it's yours to run, read, and modify.
+|                   | Naive keyword bot                                 | AntiLink Guard OSS                                             |
+| ----------------- | ------------------------------------------------- | -------------------------------------------------------------- |
+| Detection         | Substring match on `http`                         | Real link extraction: markdown, bare `www.`, Discord invites   |
+| Obfuscation       | Bypassed by `hxxps://`, `[.]`, zero-width chars   | De-obfuscated before scoring                                   |
+| Lookalike domains | Not detected                                      | Punycode + Latin/Cyrillic/Greek homoglyph checks               |
+| Decision          | Binary: delete or ignore                          | Scored verdict (`ALLOW`/`WARN`/`BLOCK`/`QUARANTINE`)           |
+| Enforcement       | Fixed                                             | Configurable ladder: `log → warn → delete → timeout`           |
+| Failure mode      | Crashes or silently no-ops on missing permissions | Checks permissions first, fails safe, logs why                 |
+| Message content   | Often logged in full                              | Audit log type has no field that can hold it                   |
+| Extensibility     | Fork the script                                   | Typed packages: swap storage, embed the engine, script the CLI |
 
 ## Features
 
@@ -108,8 +125,8 @@ every package's exports.
 ## Quick start
 
 ```bash
-git clone https://github.com/timeout187/antilink-guard.git
-cd antilink-guard
+git clone https://github.com/timeout187/AntiLink-Guard-OSS.git
+cd AntiLink-Guard-OSS
 pnpm install
 pnpm run build
 

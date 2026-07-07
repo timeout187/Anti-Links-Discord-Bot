@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: 📖 Documentation
-    url: https://github.com/timeout187/antilink-guard/tree/main/docs
+    url: https://github.com/timeout187/AntiLink-Guard-OSS/tree/main/docs
     about: Guides and configuration reference (getting started, self-hosting, rules engine, and more).
   - name: 🔒 Report a security vulnerability
-    url: https://github.com/timeout187/antilink-guard/security/advisories/new
+    url: https://github.com/timeout187/AntiLink-Guard-OSS/security/advisories/new
     about: Please report vulnerabilities privately — never in public issues.
