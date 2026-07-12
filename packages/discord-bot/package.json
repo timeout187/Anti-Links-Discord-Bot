@@ -24,7 +24,7 @@
   "dependencies": {
     "@antilink-guard/core": "workspace:*",
     "@antilink-guard/storage": "workspace:*",
-    "discord.js": "^14.26.4",
+    "discord.js": "^14.26.5",
     "pino": "^10.3.1"
   },
   "devDependencies": {
